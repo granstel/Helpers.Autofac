@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Represents a dependency that can be released by the dependent component. 
+Depend on System.Func&lt;Owned&lt;T&gt;&gt; in order to create and dispose of other components as required.
+Type parameter "T" is the service provided by the dependency.</Description>
+    <Copyright>GranSteL</Copyright>
+    <PackageLicenseUrl>https://github.com/granstel/Helpers-Autofac/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/granstel/Helpers-Autofac</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/granstel/Helpers-Autofac</RepositoryUrl>
+    <PackageTags>Autofac, Owned, InstancePerMatchingLifetimeScope</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
