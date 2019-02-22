@@ -2,7 +2,7 @@ Autofac.Helpers
 ================
 
 SafeInvoker:
-Represents a dependency that can be released after using. 
+Represents a dependency that releases after using.
 Depend on System.Func<Owned<T>> in order to create and dispose of other components as required.
 
 Install
