@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Title>Autofac.Helpers</Title>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>Represents a dependency that can be released by the dependent component. 
+    <Description>SafeInvoker:
+Represents a dependency that releases after using.
 Depend on System.Func&lt;Owned&lt;T&gt;&gt; in order to create and dispose of other components as required.
 Type parameter "T" is the service provided by the dependency.</Description>
     <Copyright>GranSteL</Copyright>
@@ -12,6 +14,11 @@ Type parameter "T" is the service provided by the dependency.</Description>
     <PackageProjectUrl>https://github.com/granstel/Helpers-Autofac</PackageProjectUrl>
     <RepositoryUrl>https://github.com/granstel/Helpers-Autofac</RepositoryUrl>
     <PackageTags>Autofac, Owned, InstancePerMatchingLifetimeScope</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageReleaseNotes>Added symbols</PackageReleaseNotes>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ using Autofac.Features.OwnedInstances;
 namespace GranSteL.Helpers.Autofac
 {
     /// <summary>
-    /// Represents a dependency that can be released by the dependent component.
+    /// Represents a dependency that releases after using.
     /// Depend on System.Func&lt;Owned&lt;T&gt;&gt; in order to create and dispose of other components as required.
     /// </summary>
     /// <typeparam name="T">The service provided by the dependency.</typeparam>
