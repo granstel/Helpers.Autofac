@@ -6,3 +6,9 @@
 /src/GranSteL.Helpers.Autofac/obj
 /src/GranSteL.Helpers.Autofac/bin/Debug/netstandard2.0
 /src/GranSteL.Helpers.Autofac/bin/Release
+/packages
+/src/GranSteL.Helpers.Autofac.Tests/bin/Release/netcoreapp2.1
+/src/GranSteL.Helpers.Autofac.Tests/obj
+/src/.vs/GranSteL.Helpers.Autofac/DesignTimeBuild
+/src/GranSteL.Helpers.Autofac/bin/Debug
+/src/GranSteL.Helpers.Autofac.Tests/bin/Debug/netcoreapp2.1
