@@ -17,6 +17,36 @@ namespace GranSteL.Helpers.Autofac.Tests
             return await Task.Run(() => action.Invoke());
         }
 
+        internal async Task TestAsync(Action action)
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(DisposableFixture), $"{nameof(DisposableFixture)} already disposed");
+            }
+
+            await Task.Run(() => action.Invoke());
+        }
+
+        internal T Test<T>(Func<T> action)
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(DisposableFixture), $"{nameof(DisposableFixture)} already disposed");
+            }
+
+            return action.Invoke();
+        }
+
+        internal void Test(Action action)
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(DisposableFixture), $"{nameof(DisposableFixture)} already disposed");
+            }
+
+            action.Invoke();
+        }
+
         public void Dispose()
         {
             _disposed = true;
