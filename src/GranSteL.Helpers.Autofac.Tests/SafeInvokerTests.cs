@@ -29,20 +29,15 @@ namespace Tests
         [Test]
         public async Task NestedInvokes_InvalidInvoke_Throws()
         {
-            await _invoker.InvokeAsync(async d =>
+            await _invoker.Invoke(async d =>
             {
-                var result1 =  _invoker.Invoke(t => t.TestAsync(() =>
+                var result1 =  await _invoker.InvokeAsync(t => t.TestAsync(() =>
                 {
                      Thread.Sleep(1000);
                      return 5;
                 }));
 
-                var result2 = await d.TestAsync(async () =>
-                {
-                    return (await (result1)) + 1;
-                });
-
-                //Assert.AreEqual(result2, ++result1);
+                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync(() => result1 + 1));
             });
 
             Thread.Sleep(3000);
