@@ -30,7 +30,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         }
 
         [Test]
-        public async Task SynchronousMainInvoke_AsyncNestedReturnsVoids_Throws()
+        public async Task Synchronous_AsyncNested_ReturnsVoid_Throws()
         {
             await _invoker.Invoke(async d =>
             {
@@ -49,7 +49,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         }
 
         [Test]
-        public async Task SynchronousMainInvoke_SyncNestedReturnsVoids_Throws()
+        public async Task Synchronous_SyncNested_ReturnsVoid_Throws()
         {
             await _invoker.Invoke(async d =>
             {
@@ -68,13 +68,13 @@ namespace GranSteL.Helpers.Autofac.Tests
         }
 
         [Test]
-        public async Task SynchronousMainInvoke_SyncNestedReturns_Throws()
+        public async Task Synchronous_AsyncNested_ReturnsValue_Throws()
         {
             var result = _fixture.Create<int>();
 
             await _invoker.Invoke(async d =>
             {
-                var firstReturns = await _invoker.Invoke(t => t.TestAsync(() =>
+                var firstReturns = await _invoker.InvokeAsync(t => t.TestAsync(() =>
                 {
                     Thread.Sleep(1000);
 
@@ -93,13 +93,13 @@ namespace GranSteL.Helpers.Autofac.Tests
         }
 
         [Test]
-        public async Task SynchronousMainInvoke_AsyncNestedReturns_Throws()
+        public async Task Synchronous_SyncNested_ReturnsValue_Throws()
         {
             var result = _fixture.Create<int>();
 
             await _invoker.Invoke(async d =>
             {
-                var firstReturns = await _invoker.InvokeAsync(t => t.TestAsync(() =>
+                var firstReturns = await _invoker.Invoke(t => t.TestAsync(() =>
                 {
                     Thread.Sleep(1000);
 

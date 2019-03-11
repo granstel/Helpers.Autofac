@@ -8,7 +8,7 @@ namespace GranSteL.Helpers.Autofac.Tests
     public partial class SafeInvokerTests
     {
         [Test]
-        public void SynchronousMainInvoke_SyncNestedSyncReturns_Success()
+        public void Synchronous_SyncNested_ReturnsValue_Success()
         {
             var result = _fixture.Create<int>();
 
@@ -31,7 +31,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         }
 
         [Test]
-        public void SynchronousMainInvoke_SyncNestedASyncReturns_Success()
+        public void Synchronous_AsyncNested_ReturnsValue_Success()
         {
             var result = _fixture.Create<int>();
 
