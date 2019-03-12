@@ -1,8 +1,8 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using AutoFixture;
+using Moq;
 using NUnit.Framework;
 
 namespace GranSteL.Helpers.Autofac.Tests
@@ -10,17 +10,26 @@ namespace GranSteL.Helpers.Autofac.Tests
     [TestFixture]
     public partial class SafeInvokerTests
     {
+        private MockRepository _mockRepository;
+
         private ISafeInvoker<DisposableFixture> _invoker;
+
+        private Mock<IFixture> _testFixture;
 
         private Fixture _fixture;
 
         [SetUp]
         public void Setup()
         {
+            _mockRepository = new MockRepository(MockBehavior.Strict);
+
+            _testFixture = _mockRepository.Create<IFixture>();
+
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterGeneric(typeof(SafeInvoker<>)).As(typeof(ISafeInvoker<>)).SingleInstance();
-            containerBuilder.RegisterType<DisposableFixture>();
+            containerBuilder.RegisterType<DisposableFixture>().InstancePerDependency();
+            containerBuilder.Register(c => _testFixture.Object).As<IFixture>();
 
             var container = containerBuilder.Build();
 
@@ -32,89 +41,31 @@ namespace GranSteL.Helpers.Autofac.Tests
         [Test]
         public async Task Synchronous_AsyncNested_ReturnsVoid_Throws()
         {
+            _testFixture.Setup(f => f.Test());
+
             await _invoker.Invoke(async d =>
             {
-                await _invoker.InvokeAsync(t => t.TestAsync(() =>
-                {
-                     Thread.Sleep(1000);
-                }));
+                await _invoker.InvokeAsync(t => t.TestAsync());
 
-                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
-                }));
+                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync());
             });
 
-            Thread.Sleep(3000);
+            _testFixture.VerifyAll();
         }
 
         [Test]
         public async Task Synchronous_SyncNested_ReturnsVoid_Throws()
         {
-            await _invoker.Invoke(async d =>
-            {
-                await _invoker.Invoke(t => t.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
-                }));
-
-                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
-                }));
-            });
-
-            Thread.Sleep(3000);
-        }
-
-        [Test]
-        public async Task Synchronous_AsyncNested_ReturnsValue_Throws()
-        {
-            var result = _fixture.Create<int>();
+            _testFixture.Setup(f => f.Test());
 
             await _invoker.Invoke(async d =>
             {
-                var firstReturns = await _invoker.InvokeAsync(t => t.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
+                await _invoker.Invoke(t => t.TestAsync());
 
-                    return result;
-                }));
-
-                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
-
-                    return firstReturns + 1;
-                }));
+                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync());
             });
 
-            Thread.Sleep(3000);
-        }
-
-        [Test]
-        public async Task Synchronous_SyncNested_ReturnsValue_Throws()
-        {
-            var result = _fixture.Create<int>();
-
-            await _invoker.Invoke(async d =>
-            {
-                var firstReturns = await _invoker.Invoke(t => t.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
-
-                    return result;
-                }));
-
-                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsync(() =>
-                {
-                    Thread.Sleep(1000);
-
-                    return firstReturns + 1;
-                }));
-            });
-
-            Thread.Sleep(3000);
+            _testFixture.VerifyAll();
         }
     }
 }
