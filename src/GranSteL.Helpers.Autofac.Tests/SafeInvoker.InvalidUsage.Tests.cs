@@ -41,7 +41,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         [Test]
         public async Task Synchronous_AsyncNested_ReturnsVoid_Throws()
         {
-            _testFixture.Setup(f => f.Test());
+            _testFixture.Setup(f => f.ReturnVoid());
 
             await _invoker.Invoke(async d =>
             {
@@ -56,7 +56,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         [Test]
         public async Task Synchronous_SyncNested_ReturnsVoid_Throws()
         {
-            _testFixture.Setup(f => f.Test());
+            _testFixture.Setup(f => f.ReturnVoid());
 
             await _invoker.Invoke(async d =>
             {

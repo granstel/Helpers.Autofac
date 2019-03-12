@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using AutoFixture;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace GranSteL.Helpers.Autofac.Tests
@@ -6,10 +7,12 @@ namespace GranSteL.Helpers.Autofac.Tests
     [TestFixture]
     public partial class SafeInvokerTests
     {
+        #region Asynchronous
+
         [Test]
         public async Task Asynchronous_AsyncNested_Success()
         {
-            _testFixture.Setup(f => f.Test());
+            _testFixture.Setup(f => f.ReturnVoid());
 
             await _invoker.InvokeAsync(async d =>
             {
@@ -24,7 +27,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         [Test]
         public async Task Asynchronous_SyncNested_Success()
         {
-            _testFixture.Setup(f => f.Test());
+            _testFixture.Setup(f => f.ReturnVoid());
 
             await _invoker.InvokeAsync(async d =>
             {
@@ -37,9 +40,55 @@ namespace GranSteL.Helpers.Autofac.Tests
         }
 
         [Test]
+        public async Task Asynchronous_AsyncReturnsValue_Success()
+        {
+            var expected = _fixture.Create<int>();
+
+            _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
+
+            var result = await _invoker.InvokeAsync(async d =>
+            {
+                var firstResult = await _invoker.InvokeAsync(t => t.TestAsyncValue<int>());
+
+                var secondResult = await d.TestAsyncValue<int>();
+
+                return firstResult + secondResult;
+            });
+
+            _testFixture.VerifyAll();
+
+            Assert.AreEqual(expected * 2, result);
+        }
+
+        [Test]
+        public async Task Asynchronous_SyncReturnsValue_Success()
+        {
+            var expected = _fixture.Create<int>();
+
+            _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
+
+            var result = await _invoker.InvokeAsync(async d =>
+            {
+                var firstResult = await _invoker.InvokeAsync(t => t.TestAsyncValue<int>());
+
+                var secondResult = await d.TestAsyncValue<int>();
+
+                return firstResult + secondResult;
+            });
+
+            _testFixture.VerifyAll();
+
+            Assert.AreEqual(expected * 2, result);
+        }
+
+        #endregion Asynchronous
+
+        #region Synchronous
+
+        [Test]
         public void Synchronous_AsyncNested_Success()
         {
-            _testFixture.Setup(f => f.Test());
+            _testFixture.Setup(f => f.ReturnVoid());
 
             _invoker.Invoke(d =>
             {
@@ -54,7 +103,7 @@ namespace GranSteL.Helpers.Autofac.Tests
         [Test]
         public void Synchronous_SyncNestedSuccess()
         {
-            _testFixture.Setup(f => f.Test());
+            _testFixture.Setup(f => f.ReturnVoid());
 
             _invoker.Invoke(d =>
             {
@@ -65,5 +114,7 @@ namespace GranSteL.Helpers.Autofac.Tests
 
             _testFixture.VerifyAll();
         }
+
+        #endregion Synchronous
     }
 }

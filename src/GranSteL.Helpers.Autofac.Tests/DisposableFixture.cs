@@ -14,32 +14,32 @@ namespace GranSteL.Helpers.Autofac.Tests
             _fixture = fixture;
         }
 
-        internal async Task<T> TestAsync<T>(Func<T> action)
+        internal async Task<T> TestAsyncValue<T>()
         {
             CheckDisposed();
 
-            return await Task.Run(() => action.Invoke());
+            return await Task.Run(() => _fixture.ReturnValue<T>());
         }
 
         internal async Task TestAsync()
         {
             CheckDisposed();
 
-            await Task.Run(() => _fixture.Test());
+            await Task.Run(() => _fixture.ReturnVoid());
         }
 
-        internal T Test<T>(Func<T> action)
+        internal T TestValue<T>()
         {
             CheckDisposed();
 
-            return action.Invoke();
+            return _fixture.ReturnValue<T>();
         }
 
         internal void Test()
         {
             CheckDisposed();
 
-            _fixture.Test();
+            _fixture.ReturnVoid();
         }
 
         private void CheckDisposed()

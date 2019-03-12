@@ -2,6 +2,8 @@
 {
     public interface IFixture
     {
-        void Test();
+        void ReturnVoid();
+
+        T ReturnValue<T>();
     }
 }
