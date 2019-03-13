@@ -67,5 +67,25 @@ namespace GranSteL.Helpers.Autofac.Tests
 
             _testFixture.VerifyAll();
         }
+
+        [Test]
+        public void Synchronous_AsyncReturnsValue_Success()
+        {
+            var expected = _fixture.Create<int>();
+
+            _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
+
+            var result = _invoker.Invoke(async d =>
+            {
+                var firstResult = await _invoker.InvokeAsync(t => t.TestAsyncValue<int>());
+
+                var secondResult = await d.TestAsyncValue<int>();
+
+                return firstResult + secondResult;
+            });
+            
+            //Excepted, that type of "result" variable is integer, but it isn't
+            Assert.AreNotEqual(typeof(int), result.GetType());
+        }
     }
 }

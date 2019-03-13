@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 
 namespace GranSteL.Helpers.Autofac.Tests
@@ -18,10 +19,10 @@ namespace GranSteL.Helpers.Autofac.Tests
             {
                 await _invoker.InvokeAsync(t => t.TestAsync());
 
-                Assert.DoesNotThrowAsync(async () => await d.TestAsync());
+                Assert.DoesNotThrowAsync(d.TestAsync);
             });
 
-            _testFixture.VerifyAll();
+            _testFixture.Verify(f => f.ReturnVoid(), Times.Exactly(2));
         }
 
         [Test]
@@ -33,10 +34,10 @@ namespace GranSteL.Helpers.Autofac.Tests
             {
                 await _invoker.Invoke(t => t.TestAsync());
 
-                Assert.DoesNotThrowAsync(async () => await d.TestAsync());
+                Assert.DoesNotThrowAsync(d.TestAsync);
             });
 
-            _testFixture.VerifyAll();
+            _testFixture.Verify(f => f.ReturnVoid(), Times.Exactly(2));
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace GranSteL.Helpers.Autofac.Tests
                 return firstResult + secondResult;
             });
 
-            _testFixture.VerifyAll();
+            _testFixture.Verify(f => f.ReturnValue<int>(), Times.Exactly(2));
 
             Assert.AreEqual(expected * 2, result);
         }
@@ -76,7 +77,7 @@ namespace GranSteL.Helpers.Autofac.Tests
                 return firstResult + secondResult;
             });
 
-            _testFixture.VerifyAll();
+            _testFixture.Verify(f => f.ReturnValue<int>(), Times.Exactly(2));
 
             Assert.AreEqual(expected * 2, result);
         }
@@ -97,11 +98,11 @@ namespace GranSteL.Helpers.Autofac.Tests
                 Assert.DoesNotThrow(d.Test);
             });
 
-            _testFixture.VerifyAll();
+            _testFixture.Verify(f => f.ReturnVoid(), Times.Exactly(2));
         }
 
         [Test]
-        public void Synchronous_SyncNestedSuccess()
+        public void Synchronous_SyncNested_Success()
         {
             _testFixture.Setup(f => f.ReturnVoid());
 
@@ -112,7 +113,28 @@ namespace GranSteL.Helpers.Autofac.Tests
                 Assert.DoesNotThrow(d.Test);
             });
 
-            _testFixture.VerifyAll();
+            _testFixture.Verify(f => f.ReturnVoid(), Times.Exactly(2));
+        }
+
+        [Test]
+        public void Synchronous_SyncReturnsValue_Success()
+        {
+            var expected = _fixture.Create<int>();
+
+            _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
+
+            var result = _invoker.Invoke(d =>
+            {
+                var firstResult = _invoker.Invoke(t => t.TestValue<int>());
+
+                var secondResult = d.TestValue<int>();
+
+                return firstResult + secondResult;
+            });
+
+            _testFixture.Verify(f => f.ReturnValue<int>(), Times.Exactly(2));
+
+            Assert.AreEqual(expected * 2, result);
         }
 
         #endregion Synchronous
