@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GranSteL.Helpers.Autofac.Tests
+namespace GranSteL.Helpers.Autofac.Tests.Fixtures
 {
     internal class DisposableFixture : IDisposable
     {

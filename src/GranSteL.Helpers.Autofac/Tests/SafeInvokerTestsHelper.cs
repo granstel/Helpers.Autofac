@@ -2,7 +2,7 @@
 using Autofac.Core.Registration;
 using Autofac.Features.OwnedInstances;
 
-namespace GranSteL.Helpers.Autofac
+namespace GranSteL.Helpers.Autofac.Tests
 {
     public static class SafeInvokerTestsHelper
     {

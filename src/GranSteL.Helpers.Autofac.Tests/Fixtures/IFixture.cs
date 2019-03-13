@@ -1,4 +1,4 @@
-﻿namespace GranSteL.Helpers.Autofac.Tests
+﻿namespace GranSteL.Helpers.Autofac.Tests.Fixtures
 {
     public interface IFixture
     {

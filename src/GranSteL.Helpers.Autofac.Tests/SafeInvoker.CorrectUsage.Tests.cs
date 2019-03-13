@@ -15,9 +15,9 @@ namespace GranSteL.Helpers.Autofac.Tests
         {
             _testFixture.Setup(f => f.ReturnVoid());
 
-            await _invoker.InvokeAsync(async d =>
+            await _target.InvokeAsync(async d =>
             {
-                await _invoker.InvokeAsync(t => t.TestAsync());
+                await _target.InvokeAsync(t => t.TestAsync());
 
                 Assert.DoesNotThrowAsync(d.TestAsync);
             });
@@ -30,9 +30,9 @@ namespace GranSteL.Helpers.Autofac.Tests
         {
             _testFixture.Setup(f => f.ReturnVoid());
 
-            await _invoker.InvokeAsync(async d =>
+            await _target.InvokeAsync(async d =>
             {
-                await _invoker.Invoke(t => t.TestAsync());
+                await _target.Invoke(t => t.TestAsync());
 
                 Assert.DoesNotThrowAsync(d.TestAsync);
             });
@@ -47,9 +47,9 @@ namespace GranSteL.Helpers.Autofac.Tests
 
             _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
 
-            var result = await _invoker.InvokeAsync(async d =>
+            var result = await _target.InvokeAsync(async d =>
             {
-                var firstResult = await _invoker.InvokeAsync(t => t.TestAsyncValue<int>());
+                var firstResult = await _target.InvokeAsync(t => t.TestAsyncValue<int>());
 
                 var secondResult = await d.TestAsyncValue<int>();
 
@@ -68,9 +68,9 @@ namespace GranSteL.Helpers.Autofac.Tests
 
             _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
 
-            var result = await _invoker.InvokeAsync(async d =>
+            var result = await _target.InvokeAsync(async d =>
             {
-                var firstResult = await _invoker.InvokeAsync(t => t.TestAsyncValue<int>());
+                var firstResult = await _target.InvokeAsync(t => t.TestAsyncValue<int>());
 
                 var secondResult = await d.TestAsyncValue<int>();
 
@@ -91,9 +91,9 @@ namespace GranSteL.Helpers.Autofac.Tests
         {
             _testFixture.Setup(f => f.ReturnVoid());
 
-            _invoker.Invoke(d =>
+            _target.Invoke(d =>
             {
-                _invoker.InvokeAsync(t => t.TestAsync());
+                _target.InvokeAsync(t => t.TestAsync());
 
                 Assert.DoesNotThrow(d.Test);
             });
@@ -106,9 +106,9 @@ namespace GranSteL.Helpers.Autofac.Tests
         {
             _testFixture.Setup(f => f.ReturnVoid());
 
-            _invoker.Invoke(d =>
+            _target.Invoke(d =>
             {
-                _invoker.Invoke(t => t.Test());
+                _target.Invoke(t => t.Test());
 
                 Assert.DoesNotThrow(d.Test);
             });
@@ -123,9 +123,9 @@ namespace GranSteL.Helpers.Autofac.Tests
 
             _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
 
-            var result = _invoker.Invoke(d =>
+            var result = _target.Invoke(d =>
             {
-                var firstResult = _invoker.Invoke(t => t.TestValue<int>());
+                var firstResult = _target.Invoke(t => t.TestValue<int>());
 
                 var secondResult = d.TestValue<int>();
 
