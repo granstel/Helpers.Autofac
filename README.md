@@ -1,5 +1,6 @@
 Autofac.Helpers
 ================
+![alt text](https://ci.appveyor.com/api/projects/status/bg07tb833tj2rmgu?svg=true "master branch status badge")
 
 SafeInvoker:
 Represents a dependency that releases after using.
