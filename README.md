@@ -8,7 +8,7 @@ Depend on System.Func<Owned<T>> in order to create and dispose of other componen
 
 Install
 -------
-It's available via [nuget package](https://www.nuget.org/packages/topshelf.autofac)  
+It's available via [nuget package](https://www.nuget.org/packages/GranSteL.Helpers.Autofac/)  
 PM> `Install-Package GranSteL.Helpers.Autofac`
 
 Example Usage
