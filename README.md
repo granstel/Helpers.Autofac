@@ -1,6 +1,7 @@
 Autofac.Helpers
 ================
-![alt text](https://ci.appveyor.com/api/projects/status/bg07tb833tj2rmgu?svg=true "master branch status badge")
+[![Build status](https://ci.appveyor.com/api/projects/status/bg07tb833tj2rmgu?svg=true)](https://ci.appveyor.com/project/granstel/helpers-autofac)
+[![NuGet](https://buildstats.info/nuget/GranSteL.Helpers.Autofac)](https://www.nuget.org/packages/GranSteL.Helpers.Autofac)
 
 SafeInvoker:
 Represents a dependency that releases after using.
