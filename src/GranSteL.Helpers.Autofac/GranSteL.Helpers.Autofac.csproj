@@ -18,8 +18,8 @@ Type parameter "T" is the service provided by the dependency.</Description>
     <IncludeSymbols>true</IncludeSymbols>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <PackageReleaseNotes>Added tests helper, fix repository url</PackageReleaseNotes>
-    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Added copy of Autofac.Integration.Wcf.RegistrationExtensions</PackageReleaseNotes>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
