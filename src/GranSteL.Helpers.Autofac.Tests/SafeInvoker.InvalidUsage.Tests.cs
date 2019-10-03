@@ -88,5 +88,22 @@ namespace GranSteL.Helpers.Autofac.Tests
             //Excepted, that type of "result" variable is integer, but it isn't
             Assert.AreNotEqual(typeof(int), result.GetType());
         }
+
+        [Test]
+        public async Task Synchronous_AsyncNested_ReturnsValue_Throws()
+        {
+            var expected = _fixture.Create<int>();
+
+            _testFixture.Setup(f => f.ReturnValue<int>()).Returns(expected);
+
+            await _target.Invoke(async d =>
+            {
+                await _target.InvokeAsync(t => t.TestAsyncValue<int>());
+
+                Assert.ThrowsAsync<ObjectDisposedException>(async () => await d.TestAsyncValue<int>());
+            });
+
+            _testFixture.VerifyAll();
+        }
     }
 }
